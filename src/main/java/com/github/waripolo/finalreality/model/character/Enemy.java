@@ -1,19 +1,24 @@
-package com.github.cc3002.finalreality.model.character;
+package com.github.waripolo.finalreality.model.character;
 
-import com.github.cc3002.finalreality.model.character.player.CharacterClass;
+import com.github.waripolo.finalreality.model.character.player.CharacterClass;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
  * A class that holds all the information of a single enemy of the game.
  *
  * @author Ignacio Slater Muñoz
- * @author <Your name>
+ * @author Nicolás Fernández
  */
 public class Enemy extends AbstractCharacter {
 
   private final int weight;
+  private ScheduledExecutorService scheduledExecutor;
 
   /**
    * Creates a new enemy with a name, a weight and the queue with the characters ready to
@@ -47,5 +52,13 @@ public class Enemy extends AbstractCharacter {
   @Override
   public int hashCode() {
     return Objects.hash(getWeight());
+  }
+
+  @Override
+  public void waitTurn() {
+    scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+    var enemy = this;
+    scheduledExecutor.schedule(this::addToQueue, enemy.getWeight() / 10, TimeUnit.SECONDS);
+
   }
 }

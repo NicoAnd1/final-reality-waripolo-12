@@ -1,18 +1,26 @@
-package com.github.cc3002.finalreality.model.character.player;
+package com.github.waripolo.finalreality.model.character.player;
 
-import com.github.cc3002.finalreality.model.character.AbstractCharacter;
-import com.github.cc3002.finalreality.model.character.ICharacter;
+import com.github.waripolo.finalreality.model.character.AbstractCharacter;
+import com.github.waripolo.finalreality.model.character.ICharacter;
+import com.github.waripolo.finalreality.model.weapon.Weapon;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 import org.jetbrains.annotations.NotNull;
 
 /**
  * A class that holds all the information of a single character of the game.
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author Nicolás Fernández
  */
 public class PlayerCharacter extends AbstractCharacter {
+
+  private Weapon equippedWeapon = null;
+  private ScheduledExecutorService scheduledExecutor;
 
   /**
    * Creates a new character.
@@ -46,5 +54,24 @@ public class PlayerCharacter extends AbstractCharacter {
     final PlayerCharacter that = (PlayerCharacter) o;
     return getCharacterClass() == that.getCharacterClass()
         && getName().equals(that.getName());
+  }
+
+  @Override
+  public void waitTurn() {
+    scheduledExecutor = Executors.newSingleThreadScheduledExecutor();
+    scheduledExecutor.schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
+  }
+
+/**
+ * Equips a weapon to the character.
+ */
+  public void equip(Weapon weapon) {
+    this.equippedWeapon = weapon;
+  }
+/**
+ * Return this character's equipped weapon.
+ */
+  public Weapon getEquippedWeapon() {
+    return equippedWeapon;
   }
 }

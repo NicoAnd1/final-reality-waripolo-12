@@ -1,11 +1,11 @@
-package com.github.cc3002.finalreality.model.weapon;
+package com.github.waripolo.finalreality.model.weapon;
 
 /**
  * Enumeration of all the weapon types.
  *
  * @author Ignacio Slater Muñoz.
- * @author <Your name>
+ * @author Nciolás Fernández
  */
-public enum WeaponType {
+/**public enum WeaponType {
   SWORD, AXE, KNIFE, STAFF, BOW
 }
