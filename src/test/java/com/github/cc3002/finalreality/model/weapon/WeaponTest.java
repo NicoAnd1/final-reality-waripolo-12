@@ -40,7 +40,7 @@ class WeaponTest {
     var expectedSword = new Sword(SWORD_NAME, DAMAGE, SPEED);
     var expectedBow = new Bow(BOW_NAME, DAMAGE, SPEED);
     var expectedKnife = new Knife(KNIFE_NAME, DAMAGE, SPEED);
-    var notExpectedAxe = new Axe("Juampi tkm", 3, 5);
+    var notExpectedAxe = new Axe("Bad Axe", 3, 5);
 
     assertEquals(expectedAxe, testAxe);
     assertEquals(expectedAxe.hashCode(), testAxe.hashCode());
