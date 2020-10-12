@@ -1,7 +1,6 @@
 package com.github.waripolo.finalreality.model.character;
 
 import com.github.waripolo.finalreality.model.character.player.CharacterClass;
-import com.github.waripolo.finalreality.model.weapon.Weapon;
 
 /**
  * This represents a character from the game.

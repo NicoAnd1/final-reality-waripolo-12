@@ -1,7 +1,6 @@
 package com.github.waripolo.finalreality.model.character;
 
 import com.github.waripolo.finalreality.model.character.player.CharacterClass;
-import com.github.waripolo.finalreality.model.weapon.Weapon;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -18,7 +17,7 @@ public abstract class AbstractCharacter implements ICharacter {
   protected final BlockingQueue<ICharacter> turnsQueue;
   protected final String name;
   private final CharacterClass characterClass;
-  protected Weapon equippedWeapon = null;
+
   private ScheduledExecutorService scheduledExecutor;
 
   protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
