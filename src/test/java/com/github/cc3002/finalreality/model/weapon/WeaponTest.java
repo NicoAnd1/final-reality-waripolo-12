@@ -41,6 +41,10 @@ class WeaponTest {
     var expectedBow = new Bow(BOW_NAME, DAMAGE, SPEED);
     var expectedKnife = new Knife(KNIFE_NAME, DAMAGE, SPEED);
     var notExpectedAxe = new Axe("Bad Axe", 3, 5);
+    var notExpectedStaff = new Staff("Bad Staff", 3, 5);
+    var notExpectedSword = new Sword("Bad Sword", 3, 5);
+    var notExpectedBow = new Bow("Bad Bow", 3, 5);
+    var notExpectedKnife = new Knife("Bad Knife", 3, 5);
 
     assertEquals(expectedAxe, testAxe);
     assertEquals(expectedAxe.hashCode(), testAxe.hashCode());
@@ -53,5 +57,14 @@ class WeaponTest {
     assertEquals(expectedKnife, testKnife);
     assertEquals(expectedKnife.hashCode(), testKnife.hashCode());
     assertNotEquals(notExpectedAxe, testAxe);
+    assertNotEquals(notExpectedAxe.hashCode(), testAxe.hashCode());
+    assertNotEquals(notExpectedStaff, testStaff);
+    assertNotEquals(notExpectedStaff.hashCode(), testStaff.hashCode());
+    assertNotEquals(notExpectedSword, testSword);
+    assertNotEquals(notExpectedSword.hashCode(), testSword.hashCode());
+    assertNotEquals(notExpectedBow, testBow);
+    assertNotEquals(notExpectedBow.hashCode(), testBow.hashCode());
+    assertNotEquals(notExpectedKnife, testKnife);
+    assertNotEquals(notExpectedKnife.hashCode(), testKnife.hashCode());
   }
 }
