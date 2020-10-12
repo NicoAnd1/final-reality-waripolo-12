@@ -9,3 +9,4 @@ package com.github.waripolo.finalreality.model.weapon;
 /**public enum WeaponType {
   SWORD, AXE, KNIFE, STAFF, BOW
 }
+*/

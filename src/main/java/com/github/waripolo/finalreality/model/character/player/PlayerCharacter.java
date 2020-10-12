@@ -2,7 +2,7 @@ package com.github.waripolo.finalreality.model.character.player;
 
 import com.github.waripolo.finalreality.model.character.AbstractCharacter;
 import com.github.waripolo.finalreality.model.character.ICharacter;
-import com.github.waripolo.finalreality.model.weapon.Weapon;
+import com.github.waripolo.finalreality.model.weapon.*;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
@@ -19,8 +19,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class PlayerCharacter extends AbstractCharacter {
 
-  private Weapon equippedWeapon = null;
-  private ScheduledExecutorService scheduledExecutor;
+  protected ScheduledExecutorService scheduledExecutor;
+  private IWeapon equippedWeapon;
 
   /**
    * Creates a new character.
@@ -65,13 +65,13 @@ public class PlayerCharacter extends AbstractCharacter {
 /**
  * Equips a weapon to the character.
  */
-  public void equip(Weapon weapon) {
+  public void equip(IWeapon weapon) {
     this.equippedWeapon = weapon;
   }
 /**
  * Return this character's equipped weapon.
  */
-  public Weapon getEquippedWeapon() {
+  public IWeapon getEquippedWeapon() {
     return equippedWeapon;
   }
 }

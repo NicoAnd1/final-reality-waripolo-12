@@ -16,7 +16,7 @@ public abstract class AbstractWeapon implements IWeapon {
     protected AbstractWeapon (String name, int attack, int weight) {
         this.name = name;
         this.attack = attack;
-        this.weight =weight;
+        this.weight = weight;
     }
 
     @Override
@@ -37,5 +37,10 @@ public abstract class AbstractWeapon implements IWeapon {
     @Override
     public int hashCode() {
         return Objects.hash(getName(), getAttack(), getWeight());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return this.hashCode() == o.hashCode();
     }
 }
