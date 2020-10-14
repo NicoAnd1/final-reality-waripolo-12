@@ -24,6 +24,13 @@ public class PlayerCharacter extends AbstractCharacter {
 
   /**
    * Creates a new character.
+   *
+   * @param name
+   *     the name of the character.
+   * @param turnsQueue
+   *     the queue with the characters waiting for their turn.
+   * @param characterClass
+   *     the class of the character.
    */
   public PlayerCharacter(@NotNull String name,
       @NotNull BlockingQueue<ICharacter> turnsQueue,
