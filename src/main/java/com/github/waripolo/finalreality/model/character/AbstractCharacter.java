@@ -25,7 +25,7 @@ public abstract class AbstractCharacter implements ICharacter {
    * @param turnsQueue
    *     the queue with the characters waiting for their turn
    * @param name
-   *     the queue with the characters waiting for their turn
+   *     the name of the character
    * @param characterClass
    *     the class of this character
    */
