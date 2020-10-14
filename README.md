@@ -18,18 +18,14 @@ enemies controlled by the computer.
 
 **Instructions**
 ----------------
-For now, there is no instructions to run this programm.
+The programm will compile, but it will only check the tests provided in itself, therefore, there is no
+instructions to run the programm.
 
 **Considerations**
 ------------------
 For now, there was not considered the restrictions about the kind of weapon that the differents classes
 of characters can equip, also, there was not considered any type of magic in this programm and neither
 any type of adverse effect.
-
-**How to run**
---------------
-The programm will compile, but it will only check the tests provided in itself, therefore, there is no
-instructions to run the programm.
 
 **Logic**
 ---------
