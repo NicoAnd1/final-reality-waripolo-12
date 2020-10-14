@@ -4,10 +4,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.github.waripolo.finalreality.model.weapon.IWeapon;
-import com.github.waripolo.finalreality.model.weapon.WeaponType.*;
+import com.github.waripolo.finalreality.model.weapon.types.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Set of tests to check the weapon types.
+ *
+ * @author Nicolás Fernández.
+ * @see IWeapon
+ */
 class WeaponTest {
 
   private static final String AXE_NAME = "Test Axe";
@@ -24,6 +30,9 @@ class WeaponTest {
   private IWeapon testBow;
   private IWeapon testKnife;
 
+  /**
+   * Creates weapons of all the possible types, with their names, damage and speed.
+   */
   @BeforeEach
   void setUp() {
     testAxe = new Axe(AXE_NAME, DAMAGE, SPEED);
@@ -33,6 +42,11 @@ class WeaponTest {
     testKnife = new Knife(KNIFE_NAME, DAMAGE, SPEED);
   }
 
+  /**
+   * Checks if the expected weapon equals to a new weapon of the same type and parameters,
+   * and also checks if it's different with other weapon of the same type but differents
+   * parameters.
+   */
   @Test
   void constructorTest() {
     var expectedAxe = new Axe(AXE_NAME, DAMAGE, SPEED);

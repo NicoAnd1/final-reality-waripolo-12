@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * An abstract class that holds the common behaviour of the weapons in the game.
  *
- * @author Nicolás Fernández
+ * @author Nicolás Fernández.
  */
 public abstract class AbstractWeapon implements IWeapon {
 
@@ -13,6 +13,16 @@ public abstract class AbstractWeapon implements IWeapon {
     protected final int attack;
     protected final int weight;
 
+    /**
+     *Creates a new weapon.
+     *
+     * @param name
+     *     the weapon's name.
+     * @param attack
+     *     the weapon's damage.
+     * @param weight
+     *     the weapon's weight.
+     */
     protected AbstractWeapon (String name, int attack, int weight) {
         this.name = name;
         this.attack = attack;

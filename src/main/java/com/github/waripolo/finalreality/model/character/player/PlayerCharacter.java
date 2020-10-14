@@ -15,7 +15,7 @@ import org.jetbrains.annotations.NotNull;
  * A class that holds all the information of a single character of the game.
  *
  * @author Ignacio Slater Muñoz.
- * @author Nicolás Fernández
+ * @author Nicolás Fernández.
  */
 public class PlayerCharacter extends AbstractCharacter {
 
@@ -24,13 +24,6 @@ public class PlayerCharacter extends AbstractCharacter {
 
   /**
    * Creates a new character.
-   *
-   * @param name
-   *     the character's name
-   * @param turnsQueue
-   *     the queue with the characters waiting for their turn
-   * @param characterClass
-   *     the class of this character
    */
   public PlayerCharacter(@NotNull String name,
       @NotNull BlockingQueue<ICharacter> turnsQueue,
@@ -68,6 +61,7 @@ public class PlayerCharacter extends AbstractCharacter {
   public void equip(IWeapon weapon) {
     this.equippedWeapon = weapon;
   }
+
 /**
  * Return this character's equipped weapon.
  */
