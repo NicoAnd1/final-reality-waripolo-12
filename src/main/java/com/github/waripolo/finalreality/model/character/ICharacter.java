@@ -7,7 +7,7 @@ import com.github.waripolo.finalreality.model.character.player.CharacterClass;
  * A character can be controlled by the player or by the CPU (an enemy).
  *
  * @author Ignacio Slater Muñoz.
- * @author Nicolás Fernández
+ * @author Nicolás Fernández.
  */
 public interface ICharacter {
 

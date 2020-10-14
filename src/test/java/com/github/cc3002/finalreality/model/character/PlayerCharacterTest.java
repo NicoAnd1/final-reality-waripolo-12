@@ -9,6 +9,8 @@ import com.github.waripolo.finalreality.model.character.player.CharacterClass;
 import com.github.waripolo.finalreality.model.character.player.PlayerCharacter;
 import java.util.EnumMap;
 import java.util.Map;
+
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,7 +53,29 @@ class PlayerCharacterTest extends AbstractCharacterTest {
   }
 
   /**
-   * Checks that the class' constructor and equals method works properly.
+   * Checks that the character waits the appropriate amount of time for it's turn.
+   */
+  @Test
+  void waitTurnTest() {
+    Assertions.assertTrue(turns.isEmpty());
+    tryToEquip(testPlayerCharacters.get(0));
+    testPlayerCharacters.get(0).waitTurn();
+    try {
+      // Thread.sleep is not accurate so this values may be changed to adjust the
+      // acceptable error margin.
+      // We're testing that the character waits approximately 1 second.
+      Thread.sleep(900);
+      Assertions.assertEquals(0, turns.size());
+      Thread.sleep(200);
+      Assertions.assertEquals(1, turns.size());
+      Assertions.assertEquals(testPlayerCharacters.get(0), turns.peek());
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
+  /**
+   * Checks that the class's constructor and equals method works properly.
    */
   @Test
   void constructorTest() {
@@ -68,9 +92,11 @@ class PlayerCharacterTest extends AbstractCharacterTest {
                   : CharacterClass.THIEF));
       assertNotEquals(character, enemy);
     }
-
   }
 
+  /**
+   * Checks that a character can equip a weapon properly.
+   */
   @Test
   void equipWeaponTest() {
     for (var character :

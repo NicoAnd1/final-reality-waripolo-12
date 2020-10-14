@@ -3,7 +3,7 @@ package com.github.waripolo;
 import com.github.waripolo.finalreality.model.character.ICharacter;
 import com.github.waripolo.finalreality.model.character.player.CharacterClass;
 import com.github.waripolo.finalreality.model.character.player.PlayerCharacter;
-import com.github.waripolo.finalreality.model.weapon.WeaponType.Knife;
+import com.github.waripolo.finalreality.model.weapon.types.Knife;
 import java.util.Random;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;

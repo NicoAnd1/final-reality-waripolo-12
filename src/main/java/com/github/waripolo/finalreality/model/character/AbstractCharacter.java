@@ -3,14 +3,13 @@ package com.github.waripolo.finalreality.model.character;
 import com.github.waripolo.finalreality.model.character.player.CharacterClass;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
-
 import org.jetbrains.annotations.NotNull;
 
 /**
  * An abstract class that holds the common behaviour of all the characters in the game.
  *
  * @author Ignacio Slater Muñoz.
- * @author Nicolás Fernández
+ * @author Nicolás Fernández.
  */
 public abstract class AbstractCharacter implements ICharacter {
 
@@ -18,8 +17,18 @@ public abstract class AbstractCharacter implements ICharacter {
   protected final String name;
   private final CharacterClass characterClass;
 
-  private ScheduledExecutorService scheduledExecutor;
+  protected ScheduledExecutorService scheduledExecutor;
 
+  /**
+   * Creates a new Character.
+   *
+   * @param turnsQueue
+   *     the queue with the characters waiting for their turn
+   * @param name
+   *     the queue with the characters waiting for their turn
+   * @param characterClass
+   *     the class of this character
+   */
   protected AbstractCharacter(@NotNull BlockingQueue<ICharacter> turnsQueue,
       @NotNull String name, CharacterClass characterClass) {
     this.turnsQueue = turnsQueue;
