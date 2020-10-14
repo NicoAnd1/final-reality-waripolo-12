@@ -16,4 +16,29 @@ enemies controlled by the computer.
 
 ---
 
-**The rest of the documentation is left for the users of this template to complete**
+**Instructions**
+----------------
+For now, there is no instructions to run this programm.
+
+**Considerations**
+------------------
+For now, there was not considered the restrictions about the kind of weapon that the differents classes
+of characters can equip, also, there was not considered any type of magic in this programm and neither
+any type of adverse effect.
+
+**How to run**
+--------------
+The programm will compile, but it will only check the tests provided in itself, therefore, there is no
+instructions to run the programm.
+
+**Logic**
+---------
+In this programm is a class for the characters than the player can controll, the characters have 
+parameters than indicates their names, their turn in the queue and their class of character, also there is 
+a method to equip a weapon to the character; there is another class for the enemy that will be controlled
+by the CPU, this has parameters of name, weight and its turn in the queue, but there is no method to equip
+a weapon, because this will be settle by default, and there is a package for the types of weapons of the
+game, this class has parameters of name, damage and weight.
+
+
+
