@@ -38,7 +38,4 @@ parameters than indicates their names, their turn in the queue and their class o
 a method to equip a weapon to the character; there is another class for the enemy that will be controlled
 by the CPU, this has parameters of name, weight and its turn in the queue, but there is no method to equip
 a weapon, because this will be settle by default, and there is a package for the types of weapons of the
-game, this classes has parameters of name, damage and weight.
-
-
-
+game, this classes have parameters of name, damage and weight.
