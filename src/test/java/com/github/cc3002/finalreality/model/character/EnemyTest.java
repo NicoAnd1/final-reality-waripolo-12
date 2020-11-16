@@ -1,8 +1,9 @@
 package com.github.cc3002.finalreality.model.character;
 
 import com.github.waripolo.finalreality.model.character.Enemy;
-import com.github.waripolo.finalreality.model.character.player.CharacterClass;
-import com.github.waripolo.finalreality.model.character.player.PlayerCharacter;
+//import com.github.waripolo.finalreality.model.character.player.CharacterClass;
+//import com.github.waripolo.finalreality.model.character.player.PlayerCharacter;
+import com.github.waripolo.finalreality.model.character.player.classes.Thief;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,12 +25,12 @@ class EnemyTest extends AbstractCharacterTest {
   @BeforeEach
   void setUp() {
     basicSetUp();
-    testEnemy = new Enemy(ENEMY_NAME, 10, turns);
+    testEnemy = new Enemy(ENEMY_NAME, 100, 50, 10, turns);
   }
 
   /**
    * Checks that the enemy waits the appropriate amount of time for it's turn.
-   */
+   *
   @Test
   void waitTurnTest() {
     Assertions.assertTrue(turns.isEmpty());
@@ -47,6 +48,11 @@ class EnemyTest extends AbstractCharacterTest {
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
+  }*/
+
+  @Test
+  void waitTurnTest() {
+    checkWaitTurn(testEnemy);
   }
 
   /**
@@ -54,9 +60,16 @@ class EnemyTest extends AbstractCharacterTest {
    */
   @Test
   void constructorTest() {
-    checkConstruction(new Enemy(ENEMY_NAME, 10, turns),
+    checkConstruction(new Enemy(ENEMY_NAME, 100, 50, 10, turns),
         testEnemy,
-        new Enemy(ENEMY_NAME, 11, turns),
-        new PlayerCharacter(ENEMY_NAME, turns, CharacterClass.THIEF));
+        new Enemy(ENEMY_NAME, 100, 50, 11, turns),
+        new Thief(ENEMY_NAME, 100, 50, turns));
+  }
+
+  @Test
+  void attackTest() {
+    Enemy enemy = new Enemy("enemy", 100, 50, 10, turns);
+    testEnemy.attack(enemy);
+    enemy.getLife();
   }
 }

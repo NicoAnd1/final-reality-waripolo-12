@@ -1,12 +1,12 @@
 package com.github.waripolo.finalreality.model.character;
 
-import com.github.waripolo.finalreality.model.character.player.CharacterClass;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.github.waripolo.finalreality.model.character.player.IPlayerCharacter;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -17,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Enemy extends AbstractCharacter {
 
-  private final int weight;
+  public final int weight;
   protected ScheduledExecutorService scheduledExecutor;
 
   /**
@@ -31,10 +31,13 @@ public class Enemy extends AbstractCharacter {
    * @param turnsQueue
    *     the queue with the characters waiting for their turn
    */
-  public Enemy(@NotNull final String name, final int weight,
+  public Enemy(@NotNull final String name,
+      final int life, final int defense, final int weight,
       @NotNull final BlockingQueue<ICharacter> turnsQueue) {
-    super(turnsQueue, name, CharacterClass.ENEMY);
+    super(name, life, defense, turnsQueue);
     this.weight = weight;
+    this.life = 100;
+    this.defense = 50;
   }
 
   /**
@@ -67,5 +70,10 @@ public class Enemy extends AbstractCharacter {
     var enemy = this;
     scheduledExecutor.schedule(this::addToQueue, enemy.getWeight() / 10, TimeUnit.SECONDS);
 
+  }
+
+  @Override
+  public void attack(ICharacter character) {
+    character.attackedByEnemy(this);
   }
 }

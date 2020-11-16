@@ -8,7 +8,9 @@ plugins {
 }
 
 application {
-    mainClassName = "$moduleName/com.github.waripolo.finalreality.gui.FinalReality"
+    mainModule.set(moduleName)
+    mainClass.set("com.github.waripolo.finalreality.gui.FinalReality")
+    //mainClassName = "$moduleName/com.github.waripolo.finalreality.gui.FinalReality"
 }
 
 group = "com.github.cc3002"
