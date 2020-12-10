@@ -228,7 +228,7 @@ public class ControllerTest {
      */
     @Test
     void turnTest() throws InterruptedException {
-        var engineer = controller.getCharacterList().get(1);//1a0
+        var engineer = controller.getCharacterList().get(1);
         var bow = controller.getWeaponList().get(1);
         var enemy = controller.getEnemyList().get(0);
 
@@ -237,5 +237,34 @@ public class ControllerTest {
         Thread.sleep(3000);
         charPlaying = (IPlayerCharacter) controller.turnInitiated();
         charPlaying.attack(enemy);
+    }
+
+    /**
+     * Checks the case when the player wins the game
+     */
+    @Test
+    void gameWinTest() {
+        var engineer = controller.getCharacterList().get(1);
+        var bow = controller.getWeaponList().get(1);
+
+        controller.equipWeapon(engineer, bow);
+
+        while (!(controller.getEnemyList().isEmpty())) {
+            controller.attackEnemy(engineer, controller.getEnemyList().get(0));
+            controller.gameChecker();
+        }
+    }
+
+    /**
+     * Checks the case when the player lose the game
+     */
+    @Test
+    void gameLoseTest() {
+        var enemy = controller.getEnemyList().get(0);
+
+        while (!(controller.getCharacterList().isEmpty())) {
+            controller.attackCharacter(enemy, controller.getCharacterList().get(0));
+            controller.gameChecker();
+        }
     }
 }
