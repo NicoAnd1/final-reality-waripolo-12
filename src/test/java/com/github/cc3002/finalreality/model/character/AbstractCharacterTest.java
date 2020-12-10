@@ -4,11 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import com.github.waripolo.finalreality.model.character.ICharacter;
-import com.github.waripolo.finalreality.model.character.player.PlayerCharacter;
-import com.github.waripolo.finalreality.model.weapon.IWeapon;
-import com.github.waripolo.finalreality.model.weapon.types.*;
-import java.util.ArrayList;
-import java.util.List;
+import org.junit.jupiter.api.Assertions;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -22,18 +18,6 @@ import java.util.concurrent.LinkedBlockingQueue;
 public abstract class AbstractCharacterTest {
 
   protected BlockingQueue<ICharacter> turns;
-  protected List<PlayerCharacter> testPlayerCharacters;
-  protected IWeapon testWeapon;
-
-  /**
-   * Try to equip a weapon to a character
-   *
-   * @param character
-   *     character who will try to equip a weapon
-   */
-  protected void tryToEquip(PlayerCharacter character) {
-    character.equip(testWeapon);
-  }
 
   /**
    * Checks that the class's constructor and equals method works properly.
@@ -57,12 +41,28 @@ public abstract class AbstractCharacterTest {
     assertEquals(expectedCharacter.hashCode(), testEqualCharacter.hashCode());
   }
 
+  protected void checkWaitTurn(ICharacter character) {
+    Assertions.assertTrue(turns.isEmpty());
+    character.waitTurn();
+    try {
+      // Thread.sleep is not accurate so this values may be changed to adjust the
+      // acceptable error margin.
+      // We're testing that the character waits approximately 1 second.
+      Thread.sleep(900);
+      Assertions.assertEquals(0, turns.size());
+      Thread.sleep(200);
+      Assertions.assertEquals(1, turns.size());
+      Assertions.assertEquals(character, turns.peek());
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+  }
+
+
   /**
    * Creates a turns queue, a test weapon of type Axe, and a list of characters.
    */
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();
-    testWeapon = new Axe("Test", 15, 10);
-    testPlayerCharacters = new ArrayList<>();
   }
 }

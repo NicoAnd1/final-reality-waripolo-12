@@ -1,6 +1,6 @@
 package com.github.waripolo.finalreality.model.character;
 
-import com.github.waripolo.finalreality.model.character.player.CharacterClass;
+import com.github.waripolo.finalreality.model.character.player.IPlayerCharacter;
 
 /**
  * This represents a character from the game.
@@ -23,7 +23,26 @@ public interface ICharacter {
   String getName();
 
   /**
-   * Returns this character's class.
+   * Attacks a character.
+   *
+   * @param character
+   *     character who is going to be attacked.
    */
-  CharacterClass getCharacterClass();
+  void attack(ICharacter character);
+
+  /**
+   * This is attacked by a character of the game.
+   *
+   * @param character
+   *     character who is attacking this.
+   */
+  void attackedByCharacter(IPlayerCharacter character);
+
+  /**
+   * This is attacked by a enemy.
+   *
+   * @param enemy
+   *     enemy who is attacking this.
+   */
+  void attackedByEnemy(Enemy enemy);
 }
