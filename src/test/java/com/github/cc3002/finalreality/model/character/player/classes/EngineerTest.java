@@ -2,24 +2,25 @@ package com.github.cc3002.finalreality.model.character.player.classes;
 
 import com.github.cc3002.finalreality.model.character.player.AbstractPlayerCharacterTest;
 import com.github.waripolo.finalreality.model.character.Enemy;
+import com.github.waripolo.finalreality.model.character.player.IPlayerCharacter;
 import com.github.waripolo.finalreality.model.character.player.classes.Engineer;
 import com.github.waripolo.finalreality.model.character.player.classes.Knight;
-import com.github.waripolo.finalreality.model.weapon.types.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests to check the {@code Engineer} class.
+ *
+ * @author Nicolás Fernández.
+ * @see Engineer
+ */
 public class EngineerTest extends AbstractPlayerCharacterTest {
 
     private static final String ENGINEER_NAME = "Cid";
     private Engineer cid;
-    private final Axe axe = new Axe("axe", 1, 10);
-    private final Bow bow = new Bow("bow", 1, 10);
-    private final Knife knife = new Knife("knife", 1, 10);
-    private final Staff staff = new Staff("staff", 1, 10);
-    private final Sword sword = new Sword("sword", 1, 10);
+    private Knight knight = new Knight("name", 100, 50, turns);
 
     /**
      * Setup method.
@@ -31,12 +32,18 @@ public class EngineerTest extends AbstractPlayerCharacterTest {
         cid = new Engineer(ENGINEER_NAME, 100, 50, turns);
     }
 
+    /**
+     * Checks that the character waits the appropriate amount of time for it's turn.
+     */
     @Test
     void waitTurnTest() {
         cid.equip(bow);
         checkWaitTurn(cid);
     }
 
+    /**
+     * Checks the constructor
+     */
     @Test
     void constructorTest() {
         checkConstruction(new Engineer(ENGINEER_NAME, 100, 50, turns),
@@ -45,40 +52,41 @@ public class EngineerTest extends AbstractPlayerCharacterTest {
                 new Knight(ENGINEER_NAME, 100, 50, turns));
     }
 
+    /**
+     * Checks that the character can equip weapons
+     */
     @Test
     void equippedWeaponTest() {
-        //checkEquippedWeapon(cid, bow);
-
-        cid.equipAxe(axe);
+        cid.equip(axe);
         assertEquals(axe, cid.getEquippedWeapon());
 
-        cid.equipBow(bow);
+        cid.equip(bow);
         assertEquals(bow, cid.getEquippedWeapon());
 
-        cid.equipKnife(knife);
-        assertNull(cid.getEquippedWeapon());
+        cid.equip(knife);
+        assertNotEquals(knife, cid.getEquippedWeapon());
 
-        cid.equipStaff(staff);
-        assertNull(cid.getEquippedWeapon());
+        cid.equip(staff);
+        assertNotEquals(staff, cid.getEquippedWeapon());
 
-        cid.equipSword(sword);
-        assertNull(cid.getEquippedWeapon());
+        cid.equip(sword);
+        assertNotEquals(sword, cid.getEquippedWeapon());
     }
 
+    /**
+     * Checks that the character attacks an enemy
+     */
     @Test
     void attackTest() {
-        cid.equipBow(bow);
-        Enemy enemy = new Enemy("enemy", 100, 50, 10, turns);
-        cid.attack(enemy);
-        enemy.getLife();
+        checkAttack(cid, bow);
+        cid.attack((IPlayerCharacter) knight);
+    }
 
-        enemy.attack(cid);
-        cid.getLife();
-
-        Bow bigBow = new Bow("big bow", 150, 20);
-        cid.equipBow(bigBow);
-        cid.attack(enemy);
-        enemy.getLife();
-
+    /**
+     * Checks that the character is alive
+     */
+    @Test
+    void aliveTest() {
+        checkIsAlive(cid);
     }
 }

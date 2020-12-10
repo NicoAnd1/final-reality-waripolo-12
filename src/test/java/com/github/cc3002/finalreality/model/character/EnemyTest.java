@@ -1,12 +1,10 @@
 package com.github.cc3002.finalreality.model.character;
 
 import com.github.waripolo.finalreality.model.character.Enemy;
-//import com.github.waripolo.finalreality.model.character.player.CharacterClass;
-//import com.github.waripolo.finalreality.model.character.player.PlayerCharacter;
 import com.github.waripolo.finalreality.model.character.player.classes.Thief;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
  * Tests to check the {@code Enemy} class.
@@ -25,31 +23,12 @@ class EnemyTest extends AbstractCharacterTest {
   @BeforeEach
   void setUp() {
     basicSetUp();
-    testEnemy = new Enemy(ENEMY_NAME, 100, 50, 10, turns);
+    testEnemy = new Enemy(ENEMY_NAME, 100, 50, 20,10, turns);
   }
 
   /**
    * Checks that the enemy waits the appropriate amount of time for it's turn.
-   *
-  @Test
-  void waitTurnTest() {
-    Assertions.assertTrue(turns.isEmpty());
-    //tryToEquip(testEnemies.get(0));
-    testEnemy.waitTurn();
-    try {
-      // Thread.sleep is not accurate so this values may be changed to adjust the
-      // acceptable error margin.
-      // We're testing that the enemy waits approximately 1 second.
-      Thread.sleep(900);
-      Assertions.assertEquals(0, turns.size());
-      Thread.sleep(200);
-      Assertions.assertEquals(1, turns.size());
-      Assertions.assertEquals(testEnemy, turns.peek());
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
-  }*/
-
+   */
   @Test
   void waitTurnTest() {
     checkWaitTurn(testEnemy);
@@ -60,16 +39,27 @@ class EnemyTest extends AbstractCharacterTest {
    */
   @Test
   void constructorTest() {
-    checkConstruction(new Enemy(ENEMY_NAME, 100, 50, 10, turns),
+    checkConstruction(new Enemy(ENEMY_NAME, 100, 50, 20,10, turns),
         testEnemy,
-        new Enemy(ENEMY_NAME, 100, 50, 11, turns),
+        new Enemy(ENEMY_NAME, 100, 50, 20,11, turns),
         new Thief(ENEMY_NAME, 100, 50, turns));
   }
 
+  /**
+   * Checks that the enemy attacks a character
+   */
   @Test
   void attackTest() {
-    Enemy enemy = new Enemy("enemy", 100, 50, 10, turns);
-    testEnemy.attack(enemy);
-    enemy.getLife();
+    Thief thief = new Thief("thief", 100, 50, turns);
+    testEnemy.attack(thief);
+    assertEquals(30, thief.getDefense());
+  }
+
+  /**
+   * Checks that the enemy is alive
+   */
+  @Test
+  void aliveTest() {
+    checkIsAlive(testEnemy);
   }
 }

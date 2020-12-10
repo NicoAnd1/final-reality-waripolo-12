@@ -1,9 +1,7 @@
 package com.github.waripolo.finalreality.model.character.player.classes;
 
-import com.github.waripolo.finalreality.model.character.Enemy;
 import com.github.waripolo.finalreality.model.character.ICharacter;
 import com.github.waripolo.finalreality.model.character.player.AbstractPlayerCharacter;
-import com.github.waripolo.finalreality.model.character.player.IPlayerCharacter;
 import com.github.waripolo.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
@@ -23,6 +21,7 @@ public class Knight extends AbstractPlayerCharacter {
         super(name, life, defense, turnsQueue);
     }
 
+
     @Override
     public void equipAxe(IWeapon weapon) {
         super.equipAxe(weapon);
@@ -30,7 +29,7 @@ public class Knight extends AbstractPlayerCharacter {
 
     @Override
     public void equipBow(IWeapon weapon) {
-        equippedWeapon = null;
+
     }
 
     @Override
@@ -40,7 +39,7 @@ public class Knight extends AbstractPlayerCharacter {
 
     @Override
     public void equipStaff(IWeapon weapon) {
-        equippedWeapon = null;
+
     }
 
     @Override
@@ -48,11 +47,6 @@ public class Knight extends AbstractPlayerCharacter {
         super.equipSword(weapon);
     }
 
-
-    @Override
-    public void attack(ICharacter character) {
-        character.attackedByCharacter(this);
-    }
 
     @Override
     public boolean equals(final Object o) {

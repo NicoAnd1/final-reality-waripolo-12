@@ -1,12 +1,12 @@
 package com.github.cc3002.finalreality.model.character;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
-
 import com.github.waripolo.finalreality.model.character.ICharacter;
 import org.junit.jupiter.api.Assertions;
+
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Abstract class containing the common tests for all the types of characters.
@@ -41,6 +41,12 @@ public abstract class AbstractCharacterTest {
     assertEquals(expectedCharacter.hashCode(), testEqualCharacter.hashCode());
   }
 
+  /**
+   * Checks that the character waits the appropriate amount of time for it's turn.
+   *
+   * @param character
+   *     character that is being tested
+   */
   protected void checkWaitTurn(ICharacter character) {
     Assertions.assertTrue(turns.isEmpty());
     character.waitTurn();
@@ -60,9 +66,16 @@ public abstract class AbstractCharacterTest {
 
 
   /**
-   * Creates a turns queue, a test weapon of type Axe, and a list of characters.
+   * Creates a turns queue
    */
   protected void basicSetUp() {
     turns = new LinkedBlockingQueue<>();
+  }
+
+  /**
+   * Checks that the character is alive
+   */
+  protected void checkIsAlive(ICharacter character) {
+    assertTrue(character.isAlive());
   }
 }

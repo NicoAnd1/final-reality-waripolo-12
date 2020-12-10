@@ -2,6 +2,7 @@ package com.github.waripolo.finalreality.model.character.player;
 
 import com.github.waripolo.finalreality.model.character.AbstractCharacter;
 import com.github.waripolo.finalreality.model.character.ICharacter;
+import com.github.waripolo.finalreality.model.controller.IHandler;
 import com.github.waripolo.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
@@ -10,6 +11,13 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
+/**
+ * An abstract class that holds the common behaviour of all the player's
+ * characters in the game
+ *
+ * @author Ignacio Slater Muñoz.
+ * @author Nicolás Fernández.
+ */
 public abstract class AbstractPlayerCharacter extends AbstractCharacter implements
     IPlayerCharacter {
 
@@ -41,36 +49,62 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
                 .schedule(this::addToQueue, equippedWeapon.getWeight() / 10, TimeUnit.SECONDS);
     }
 
+    /**
+     * Attacks a character of type IPlayerCharacter
+     * @param character
+     *     the character that is being attacked
+     */
+    public void attack(IPlayerCharacter character) {
+        character.attackedByCharacter(this);
+    }
+
+
+    /**
+     * Attacks a character of type ICharacter
+     * @param character
+     *     the character that is being attacked
+     */
+    public void attack(ICharacter character) {
+        character.attackedByCharacter(this);
+    }
 
     @Override
     public void equip(IWeapon weapon) {
+        weapon.equippedBy(this);
+    }
+
+    /**
+     * Equips a weapon to the character
+     */
+    public void equipp(IWeapon weapon) {
         this.equippedWeapon = weapon;
     }
 
     @Override
     public void equipAxe(IWeapon weapon) {
-        equip(weapon);
+        equipp(weapon);
     }
 
     @Override
     public void equipBow(IWeapon weapon) {
-        equip(weapon);
+        equipp(weapon);
     }
 
     @Override
     public void equipKnife(IWeapon weapon) {
-        equip(weapon);
+        equipp(weapon);
     }
 
     @Override
     public void equipStaff(IWeapon weapon) {
-        equip(weapon);
+        equipp(weapon);
     }
 
     @Override
     public void equipSword(IWeapon weapon) {
-        equip(weapon);
+        equipp(weapon);
     }
+
 
     @Override
     public IWeapon getEquippedWeapon() {
@@ -96,5 +130,20 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
         }
         final AbstractPlayerCharacter that = (AbstractPlayerCharacter) o;
         return Objects.equals(getEquippedWeapon(), that.getEquippedWeapon());
+    }
+
+
+    /**
+     * Adds the character to the listener that notify when the character is alive
+     */
+    public void addCharacterHandler(IHandler handler) {
+        deadCharacterEvent.addPropertyChangeListener(handler);
+    }
+
+    /**
+     * Adds the character to the listener that notify that the turn is over
+     */
+    public void addCharacterTurnHandler(IHandler handler) {
+        endCharactersTurnEvent.addPropertyChangeListener(handler);
     }
 }
