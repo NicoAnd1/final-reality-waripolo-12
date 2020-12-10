@@ -1,6 +1,7 @@
 package com.github.waripolo.finalreality.model.character;
 
 import com.github.waripolo.finalreality.model.character.player.IPlayerCharacter;
+import com.github.waripolo.finalreality.model.controller.IHandler;
 
 /**
  * This represents a character from the game.
@@ -28,7 +29,7 @@ public interface ICharacter {
    * @param character
    *     character who is going to be attacked.
    */
-  void attack(ICharacter character);
+  void attack(IPlayerCharacter character);
 
   /**
    * This is attacked by a character of the game.
@@ -45,4 +46,29 @@ public interface ICharacter {
    *     enemy who is attacking this.
    */
   void attackedByEnemy(Enemy enemy);
+
+  /**
+   * Returns the life of the character
+   */
+  int getLife();
+
+  /**
+   * Returns the defense of the character
+   */
+  int getDefense();
+
+  /**
+   * Returns true if the character is alive and false if it's not
+   */
+  boolean isAlive();
+
+  /**
+   * Adds the character to the listener that notify when the character is alive
+   */
+  void addCharacterHandler(IHandler handler);
+
+  /**
+   * Adds the character to the listener that notify that the turn is over
+   */
+  void addCharacterTurnHandler(IHandler handler);
 }

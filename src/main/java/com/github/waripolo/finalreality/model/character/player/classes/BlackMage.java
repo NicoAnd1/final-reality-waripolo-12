@@ -1,9 +1,7 @@
 package com.github.waripolo.finalreality.model.character.player.classes;
 
-import com.github.waripolo.finalreality.model.character.Enemy;
 import com.github.waripolo.finalreality.model.character.ICharacter;
 import com.github.waripolo.finalreality.model.character.player.AbstractPlayerCharacter;
-import com.github.waripolo.finalreality.model.character.player.IPlayerCharacter;
 import com.github.waripolo.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
@@ -27,14 +25,13 @@ public class BlackMage extends AbstractPlayerCharacter {
         this.mana = mana;
     }
 
+
     @Override
     public void equipAxe(IWeapon weapon) {
-        equippedWeapon = null;
     }
 
     @Override
     public void equipBow(IWeapon weapon) {
-        equippedWeapon = null;
     }
 
     @Override
@@ -49,15 +46,8 @@ public class BlackMage extends AbstractPlayerCharacter {
 
     @Override
     public void equipSword(IWeapon weapon) {
-        equippedWeapon = null;
     }
 
-
-
-    @Override
-    public void attack(ICharacter character) {
-        character.attackedByCharacter(this);
-    }
 
     @Override
     public boolean equals(final Object o) {

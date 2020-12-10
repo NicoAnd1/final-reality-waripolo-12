@@ -2,24 +2,27 @@ package com.github.cc3002.finalreality.model.character.player.classes;
 
 import com.github.cc3002.finalreality.model.character.player.AbstractPlayerCharacterTest;
 import com.github.waripolo.finalreality.model.character.Enemy;
+import com.github.waripolo.finalreality.model.character.player.IPlayerCharacter;
 import com.github.waripolo.finalreality.model.character.player.classes.BlackMage;
+import com.github.waripolo.finalreality.model.character.player.classes.Engineer;
 import com.github.waripolo.finalreality.model.character.player.classes.Knight;
-import com.github.waripolo.finalreality.model.weapon.types.*;
-import com.github.waripolo.finalreality.model.weapon.types.Sword;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests to check the {@code BlackMage} class.
+ *
+ * @author Nicolás Fernández.
+ * @see BlackMage
+ */
 public class BlackMageTest extends AbstractPlayerCharacterTest {
 
     private static final String BLACK_MAGE_NAME = "Vivi";
     private BlackMage vivi;
-    private final Axe axe = new Axe("axe", 1, 10);
-    private final Bow bow = new Bow("bow", 1, 10);
-    private final Knife knife = new Knife("knife", 1, 10);
-    private final Staff staff = new Staff("staff", 1, 10);
-    private final Sword sword = new Sword("sword", 1, 10);
+    private Engineer engineer = new Engineer("name", 100, 50, turns);
+
 
     /**
      * Setup method.
@@ -31,12 +34,18 @@ public class BlackMageTest extends AbstractPlayerCharacterTest {
         vivi = new BlackMage(BLACK_MAGE_NAME, 100, 50, turns, 100);
     }
 
+    /**
+     * Checks that the character waits the appropriate amount of time for it's turn.
+     */
     @Test
     void waitTurnTest() {
         vivi.equip(staff);
         checkWaitTurn(vivi);
     }
 
+    /**
+     * Checks the constructor
+     */
     @Test
     void constructorTest() {
         checkConstruction(new BlackMage(BLACK_MAGE_NAME, 100, 50, turns, 100),
@@ -45,39 +54,41 @@ public class BlackMageTest extends AbstractPlayerCharacterTest {
                 new Knight(BLACK_MAGE_NAME, 100, 50, turns));
     }
 
+    /**
+     * Checks that the character can equip weapons
+     */
     @Test
     void equippedWeaponTest() {
-        //checkEquippedWeapon(vivi, staff);
-
-        vivi.equipAxe(axe);
-        assertNull(vivi.getEquippedWeapon());
-
-        vivi.equipBow(bow);
-        assertNull(vivi.getEquippedWeapon());
-
-        vivi.equipKnife(knife);
-        assertEquals(knife, vivi.getEquippedWeapon());
-
-        vivi.equipStaff(staff);
+        vivi.equip(staff);
         assertEquals(staff, vivi.getEquippedWeapon());
 
-        vivi.equipSword(sword);
-        assertNull(vivi.getEquippedWeapon());
+        vivi.equip(knife);
+        assertEquals(knife, vivi.getEquippedWeapon());
+
+        vivi.equip(axe);
+        assertNotEquals(axe, vivi.getEquippedWeapon());
+
+        vivi.equip(bow);
+        assertNotEquals(bow, vivi.getEquippedWeapon());
+
+        vivi.equip(sword);
+        assertNotEquals(sword, vivi.getEquippedWeapon());
     }
 
+    /**
+     * Checks that the character attacks an enemy, and another character
+     */
     @Test
     void attackTest() {
-        vivi.equipStaff(staff);
-        Enemy enemy = new Enemy("enemy", 100, 50, 10, turns);
-        vivi.attack(enemy);
-        enemy.getLife();
+        checkAttack(vivi, staff);
+        vivi.attack((IPlayerCharacter) engineer);
+    }
 
-        enemy.attack(vivi);
-        vivi.getLife();
-
-        Staff bigStaff = new Staff("big staff", 150, 20);
-        vivi.equipStaff(bigStaff);
-        vivi.attack(enemy);
-        enemy.getLife();
+    /**
+     * Checks that the character is alive
+     */
+    @Test
+    void aliveTest() {
+        checkIsAlive(vivi);
     }
 }

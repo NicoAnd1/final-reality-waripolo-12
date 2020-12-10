@@ -2,24 +2,26 @@ package com.github.cc3002.finalreality.model.character.player.classes;
 
 import com.github.cc3002.finalreality.model.character.player.AbstractPlayerCharacterTest;
 import com.github.waripolo.finalreality.model.character.Enemy;
+import com.github.waripolo.finalreality.model.character.player.IPlayerCharacter;
 import com.github.waripolo.finalreality.model.character.player.classes.Knight;
 import com.github.waripolo.finalreality.model.character.player.classes.Thief;
-import com.github.waripolo.finalreality.model.weapon.types.*;
+import com.github.waripolo.finalreality.model.character.player.classes.WhiteMage;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Tests to check the {@code Thief} class.
+ *
+ * @author Nicolás Fernández.
+ * @see Thief
+ */
 public class ThiefTest extends AbstractPlayerCharacterTest {
 
     private static final String THIEF_NAME = "Zidane";
     private Thief zidane;
-    private final Axe axe = new Axe("axe", 1, 10);
-    private final Bow bow = new Bow("bow", 1, 10);
-    private final Knife knife = new Knife("knife", 1, 10);
-    private final Staff staff = new Staff("staff", 1, 10);
-    private final Sword sword = new Sword("sword", 1, 10);
+    private WhiteMage whiteMage = new WhiteMage("name", 100, 50, turns, 100);
 
     /**
      * Setup method.
@@ -31,12 +33,18 @@ public class ThiefTest extends AbstractPlayerCharacterTest {
         zidane = new Thief(THIEF_NAME, 100, 50, turns);
     }
 
+    /**
+     * Checks that the character waits the appropriate amount of time for it's turn.
+     */
     @Test
     void waitTurnTest() {
         zidane.equip(knife);
         checkWaitTurn(zidane);
     }
 
+    /**
+     * Checks the constructor
+     */
     @Test
     void constructorTest() {
         checkConstruction(new Thief(THIEF_NAME, 100, 50, turns),
@@ -45,39 +53,41 @@ public class ThiefTest extends AbstractPlayerCharacterTest {
                 new Knight(THIEF_NAME, 100, 50, turns));
     }
 
+    /**
+     * Checks that the character can equip weapons
+     */
     @Test
     void equippedWeaponTest() {
-        //checkEquippedWeapon(zidane, knife);
-
-        zidane.equipAxe(axe);
-        assertNull(zidane.getEquippedWeapon());
-
-        zidane.equipBow(bow);
+        zidane.equip(bow);
         assertEquals(bow, zidane.getEquippedWeapon());
 
-        zidane.equipKnife(knife);
+        zidane.equip(knife);
         assertEquals(knife, zidane.getEquippedWeapon());
 
-        zidane.equipStaff(staff);
-        assertNull(zidane.getEquippedWeapon());
-
-        zidane.equipSword(sword);
+        zidane.equip(sword);
         assertEquals(sword, zidane.getEquippedWeapon());
+
+        zidane.equip(axe);
+        assertNotEquals(axe, zidane.getEquippedWeapon());
+
+        zidane.equip(staff);
+        assertNotEquals(staff, zidane.getEquippedWeapon());
     }
 
+    /**
+     * Checks that the character attacks enemy
+     */
     @Test
     void attackTest() {
-        zidane.equipKnife(knife);
-        Enemy enemy = new Enemy("enemy", 100, 50, 10, turns);
-        zidane.attack(enemy);
-        enemy.getLife();
+        checkAttack(zidane, knife);
+        zidane.attack((IPlayerCharacter) whiteMage);
+    }
 
-        enemy.attack(zidane);
-        zidane.getLife();
-
-        Knife bigKnife = new Knife("big knife", 150, 20);
-        zidane.equipKnife(bigKnife);
-        zidane.attack(enemy);
-        enemy.getLife();
+    /**
+     * Checks that the character is alive
+     */
+    @Test
+    void aliveTest() {
+        checkIsAlive(zidane);
     }
 }
