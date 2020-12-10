@@ -29,6 +29,11 @@ public class Controller {
     private final EnemyHandler enemyHandler = new EnemyHandler(this);
     private final TurnsHandler turnsHandler = new TurnsHandler(this);
 
+    int characterCounter = 0;
+    int enemyCounter = 0;
+    int deadCharacter = 0;
+    int deadEnemies = 0;
+
     /**
      * Creates a new controller
      */
@@ -69,6 +74,7 @@ public class Controller {
      */
     public void eraseCharacter(IPlayerCharacter character) {
         playerCharacters.remove(character);
+        deadCharacter +=1;
     }
 
     /**
@@ -79,6 +85,31 @@ public class Controller {
      */
     public void eraseEnemy(ICharacter enemy) {
         enemyList.remove(enemy);
+        deadEnemies +=1;
+    }
+
+    /**
+     * Checks if the player has won or lose the game
+     */
+    public void gameChecker () {
+        if (deadCharacter == characterCounter) {
+            hasLose();
+        }
+        if (deadEnemies == enemyCounter) {
+            hasWon();
+        }
+    }
+
+    /**
+     * Indicates that the player has won the game
+     */
+    public void hasWon() {
+    }
+
+    /**
+     * Indicates that the player has lose the game
+     */
+    public void hasLose(){
     }
 
     //Item 1
@@ -94,6 +125,7 @@ public class Controller {
         playerCharacters.add(newCharacter);
         newCharacter.addCharacterHandler(characterHandler);
         newCharacter.addCharacterTurnHandler(turnsHandler);
+        characterCounter +=1;
     }
 
     /**
@@ -107,6 +139,7 @@ public class Controller {
         playerCharacters.add(newCharacter);
         newCharacter.addCharacterHandler(characterHandler);
         newCharacter.addCharacterTurnHandler(turnsHandler);
+        characterCounter +=1;
     }
 
     /**
@@ -120,6 +153,7 @@ public class Controller {
         playerCharacters.add(newCharacter);
         newCharacter.addCharacterHandler(characterHandler);
         newCharacter.addCharacterTurnHandler(turnsHandler);
+        characterCounter +=1;
     }
 
     /**
@@ -133,6 +167,7 @@ public class Controller {
         playerCharacters.add(newCharacter);
         newCharacter.addCharacterHandler(characterHandler);
         newCharacter.addCharacterTurnHandler(turnsHandler);
+        characterCounter +=1;
     }
 
     /**
@@ -146,6 +181,7 @@ public class Controller {
         playerCharacters.add(newCharacter);
         newCharacter.addCharacterHandler(characterHandler);
         newCharacter.addCharacterTurnHandler(turnsHandler);
+        characterCounter +=1;
     }
 
 
@@ -160,6 +196,7 @@ public class Controller {
         enemyList.add(newEnemy);
         newEnemy.addCharacterHandler(enemyHandler);
         newEnemy.addCharacterTurnHandler(turnsHandler);
+        enemyCounter +=1;
     }
 
 
