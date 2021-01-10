@@ -1,4 +1,4 @@
-package com.github.waripolo.finalreality.model.controller;
+package com.github.waripolo.finalreality.controller.handlers;
 
 import java.beans.PropertyChangeListener;
 

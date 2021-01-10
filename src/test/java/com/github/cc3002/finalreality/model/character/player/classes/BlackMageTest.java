@@ -31,7 +31,7 @@ public class BlackMageTest extends AbstractPlayerCharacterTest {
     @BeforeEach
     void setUp() {
         super.basicSetUp();
-        vivi = new BlackMage(BLACK_MAGE_NAME, 100, 50, turns, 100);
+        vivi = new BlackMage(BLACK_MAGE_NAME, 100, 50, turns);
     }
 
     /**
@@ -48,9 +48,9 @@ public class BlackMageTest extends AbstractPlayerCharacterTest {
      */
     @Test
     void constructorTest() {
-        checkConstruction(new BlackMage(BLACK_MAGE_NAME, 100, 50, turns, 100),
+        checkConstruction(new BlackMage(BLACK_MAGE_NAME, 100, 50, turns),
                 vivi,
-                new BlackMage("Different name", 100, 50, turns, 100),
+                new BlackMage("Different name", 100, 50, turns),
                 new Knight(BLACK_MAGE_NAME, 100, 50, turns));
     }
 

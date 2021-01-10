@@ -1,5 +1,7 @@
-package com.github.waripolo.finalreality.model.controller;
+package com.github.waripolo.finalreality.controller.handlers;
 import com.github.waripolo.finalreality.model.character.ICharacter;
+import com.github.waripolo.finalreality.controller.GameController;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -8,14 +10,14 @@ import java.beans.PropertyChangeListener;
  */
 public class EnemyHandler implements PropertyChangeListener, IHandler {
 
-    private final Controller controller;
+    private final GameController gameController;
 
-    public EnemyHandler(Controller c) {
-        this.controller = c;
+    public EnemyHandler(GameController c) {
+        this.gameController = c;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        controller.eraseEnemy((ICharacter) evt.getNewValue());
+        gameController.eraseEnemy((ICharacter) evt.getNewValue());
     }
 }

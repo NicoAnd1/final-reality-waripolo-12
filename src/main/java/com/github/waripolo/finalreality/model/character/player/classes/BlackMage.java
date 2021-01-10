@@ -10,8 +10,6 @@ import java.util.concurrent.BlockingQueue;
 
 public class BlackMage extends AbstractPlayerCharacter {
 
-    private int mana;
-
     /**
      * Creates a new Character.
      *
@@ -20,9 +18,8 @@ public class BlackMage extends AbstractPlayerCharacter {
      */
     public BlackMage(@NotNull final String name,
         int life, int defense,
-        @NotNull final BlockingQueue<ICharacter> turnsQueue, int mana) {
+        @NotNull final BlockingQueue<ICharacter> turnsQueue) {
         super(name, life, defense, turnsQueue);
-        this.mana = mana;
     }
 
 

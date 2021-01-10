@@ -1,5 +1,7 @@
-package com.github.waripolo.finalreality.model.controller;
+package com.github.waripolo.finalreality.controller.handlers;
 import com.github.waripolo.finalreality.model.character.player.IPlayerCharacter;
+import com.github.waripolo.finalreality.controller.GameController;
+
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -8,14 +10,14 @@ import java.beans.PropertyChangeListener;
  */
 public class CharacterHandler implements PropertyChangeListener, IHandler {
 
-    private final Controller controller;
+    private final GameController gameController;
 
-    public CharacterHandler(Controller c) {
-        this.controller = c;
+    public CharacterHandler(GameController c) {
+        this.gameController = c;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        controller.eraseCharacter((IPlayerCharacter) evt.getNewValue());
+        gameController.eraseCharacter((IPlayerCharacter) evt.getNewValue());
     }
 }

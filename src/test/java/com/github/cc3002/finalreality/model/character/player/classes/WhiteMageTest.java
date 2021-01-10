@@ -21,7 +21,7 @@ public class WhiteMageTest extends AbstractPlayerCharacterTest {
 
     private static final String WHITE_MAGE_NAME = "Eiko";
     private WhiteMage eiko;
-    private BlackMage blackMage = new BlackMage("name", 100, 50, turns, 100);
+    private BlackMage blackMage = new BlackMage("name", 100, 50, turns);
 
     /**
      * Setup method.
@@ -30,7 +30,7 @@ public class WhiteMageTest extends AbstractPlayerCharacterTest {
     @BeforeEach
     void setUp() {
         super.basicSetUp();
-        eiko = new WhiteMage(WHITE_MAGE_NAME, 100, 50, turns, 100);
+        eiko = new WhiteMage(WHITE_MAGE_NAME, 100, 50, turns);
     }
 
     /**
@@ -47,9 +47,9 @@ public class WhiteMageTest extends AbstractPlayerCharacterTest {
      */
     @Test
     void constructorTest() {
-        checkConstruction(new WhiteMage(WHITE_MAGE_NAME, 100, 50, turns, 100),
+        checkConstruction(new WhiteMage(WHITE_MAGE_NAME, 100, 50, turns),
                 eiko,
-                new WhiteMage("Different name", 100, 50, turns, 100),
+                new WhiteMage("Different name", 100, 50, turns),
                 new Knight(WHITE_MAGE_NAME, 100, 50, turns));
     }
 

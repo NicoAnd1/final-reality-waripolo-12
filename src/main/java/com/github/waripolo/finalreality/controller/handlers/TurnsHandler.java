@@ -1,23 +1,24 @@
-package com.github.waripolo.finalreality.model.controller;
+package com.github.waripolo.finalreality.controller.handlers;
 
 import java.beans.PropertyChangeListener;
 import com.github.waripolo.finalreality.model.character.ICharacter;
+import com.github.waripolo.finalreality.controller.GameController;
+
 import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 /**
  * Notifies when the turn is over
  */
 public class TurnsHandler implements PropertyChangeListener, IHandler {
 
-    private final Controller controller;
+    private final GameController gameController;
 
-    public TurnsHandler(Controller c) {
-        this.controller = c;
+    public TurnsHandler(GameController c) {
+        this.gameController = c;
     }
 
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        controller.turnFinished((ICharacter) evt.getNewValue());
+        gameController.turnFinished(/*(ICharacter) evt.getNewValue()*/);
     }
 }
