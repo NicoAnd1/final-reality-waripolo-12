@@ -2,7 +2,7 @@ package com.github.waripolo.finalreality.model.character.player;
 
 import com.github.waripolo.finalreality.model.character.AbstractCharacter;
 import com.github.waripolo.finalreality.model.character.ICharacter;
-import com.github.waripolo.finalreality.model.controller.IHandler;
+import com.github.waripolo.finalreality.controller.handlers.IHandler;
 import com.github.waripolo.finalreality.model.weapon.IWeapon;
 import org.jetbrains.annotations.NotNull;
 
@@ -40,6 +40,7 @@ public abstract class AbstractPlayerCharacter extends AbstractCharacter implemen
       @NotNull BlockingQueue<ICharacter> turnsQueue) {
       super(name, life, defense, turnsQueue);
       this.alive = true;
+      this.isThisAnEnemy = false;
     }
 
     @Override

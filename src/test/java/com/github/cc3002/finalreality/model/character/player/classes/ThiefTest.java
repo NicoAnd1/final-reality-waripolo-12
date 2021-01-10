@@ -21,7 +21,7 @@ public class ThiefTest extends AbstractPlayerCharacterTest {
 
     private static final String THIEF_NAME = "Zidane";
     private Thief zidane;
-    private WhiteMage whiteMage = new WhiteMage("name", 100, 50, turns, 100);
+    private WhiteMage whiteMage = new WhiteMage("name", 100, 50, turns);
 
     /**
      * Setup method.

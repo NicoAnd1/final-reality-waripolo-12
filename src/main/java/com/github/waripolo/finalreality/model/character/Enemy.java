@@ -7,8 +7,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 import com.github.waripolo.finalreality.model.character.player.IPlayerCharacter;
-import com.github.waripolo.finalreality.model.controller.CharacterHandler;
-import com.github.waripolo.finalreality.model.controller.IHandler;
 import org.jetbrains.annotations.NotNull;
 
 /**

@@ -1,14 +1,12 @@
 package com.github.waripolo.finalreality.model.character;
 
-import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeSupport;
 import java.util.Objects;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 
 import com.github.waripolo.finalreality.model.character.player.IPlayerCharacter;
-import com.github.waripolo.finalreality.model.controller.CharacterHandler;
-import com.github.waripolo.finalreality.model.controller.IHandler;
+import com.github.waripolo.finalreality.controller.handlers.IHandler;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -24,11 +22,16 @@ public abstract class AbstractCharacter implements ICharacter {
   protected int life;
   protected int defense;
   protected boolean alive;
+
+  protected boolean isThisAnEnemy;
+
   protected ScheduledExecutorService scheduledExecutor;
 
   protected final PropertyChangeSupport deadCharacterEvent =
           new PropertyChangeSupport(this);
   protected final PropertyChangeSupport endCharactersTurnEvent =
+          new PropertyChangeSupport(this);
+  protected final PropertyChangeSupport newCharacterInQueue =
           new PropertyChangeSupport(this);
 
   /**
@@ -51,6 +54,7 @@ public abstract class AbstractCharacter implements ICharacter {
     this.life = life;
     this.defense = defense;
     this.alive = true;
+    this.isThisAnEnemy = true;
   }
 
   /**
@@ -59,6 +63,7 @@ public abstract class AbstractCharacter implements ICharacter {
   protected void addToQueue() {
     turnsQueue.add(this);
     scheduledExecutor.shutdown();
+    //newCharacterInQueue.firePropertyChange("new character in queue", null, this);
     endCharactersTurnEvent.firePropertyChange("turn ended", null, this);
   }
 
@@ -98,6 +103,10 @@ public abstract class AbstractCharacter implements ICharacter {
     return alive;
   }
 
+  public boolean isEnemy() {
+    return isThisAnEnemy;
+  }
+
   /**
    * Sets the new life of the character
    */
@@ -130,9 +139,10 @@ public abstract class AbstractCharacter implements ICharacter {
 
     if (damaged >= this.getLife()) {
       this.alive = false;
+      this.setLife(0);
     }
 
-    if (damage >= this.defense) {
+    if (damage >= this.defense && this.life > damage) {
       this.setDefense(0);
       this.setLife(this.getLife() - damaged);
     }

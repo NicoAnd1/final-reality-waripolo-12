@@ -1,7 +1,14 @@
-package com.github.waripolo.finalreality.model.controller;
+package com.github.waripolo.finalreality.controller;
+
+import com.github.waripolo.finalreality.controller.phases.BattlePhase;
 import com.github.waripolo.finalreality.model.character.*;
 import com.github.waripolo.finalreality.model.character.player.IPlayerCharacter;
 import com.github.waripolo.finalreality.model.character.player.classes.*;
+import com.github.waripolo.finalreality.controller.handlers.CharacterHandler;
+import com.github.waripolo.finalreality.controller.handlers.EnemyHandler;
+import com.github.waripolo.finalreality.controller.handlers.TurnsHandler;
+import com.github.waripolo.finalreality.controller.phases.InvalidTransitionException;
+import com.github.waripolo.finalreality.controller.phases.Phase;
 import com.github.waripolo.finalreality.model.weapon.IWeapon;
 import com.github.waripolo.finalreality.model.weapon.types.*;
 
@@ -15,7 +22,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  *
  * @author Nicolás Fernández
  */
-public class Controller {
+public class GameController {
 
     private IPlayerCharacter newCharacter;
     private ICharacter newEnemy;
@@ -25,6 +32,9 @@ public class Controller {
     private final List<ICharacter> enemyList = new ArrayList<>();
     private final List<IWeapon> inventory = new ArrayList<>();
 
+    private final List<ICharacter> deadList = new ArrayList<>();
+    private final List<IPlayerCharacter> deadCharacterList = new ArrayList<>();
+
     private final CharacterHandler characterHandler = new CharacterHandler(this);
     private final EnemyHandler enemyHandler = new EnemyHandler(this);
     private final TurnsHandler turnsHandler = new TurnsHandler(this);
@@ -33,11 +43,19 @@ public class Controller {
     int enemyCounter = 0;
     int deadCharacter = 0;
     int deadEnemies = 0;
+    private Phase phase;
+
+    private ICharacter characterInTurn;
+
+    private boolean endGame = false;
+    private boolean win = false;
+    private boolean lose = false;
 
     /**
      * Creates a new controller
      */
-    public Controller() {
+    public GameController() {
+     setPhase(new BattlePhase());//WaitPhase
     }
 
     /**
@@ -47,7 +65,9 @@ public class Controller {
      *     the character who is going to be added
      */
     public void addToQueue(ICharacter character) {
-        character.waitTurn();
+        if (!deadList.contains(character)) {
+            character.waitTurn();
+        }
     }
 
     /**
@@ -63,7 +83,8 @@ public class Controller {
     /**
      * Ends a turn
      */
-    public void turnFinished(ICharacter character) {
+    public void turnFinished() {
+
     }
 
     /**
@@ -73,7 +94,8 @@ public class Controller {
      *     the character who is going to be removed
      */
     public void eraseCharacter(IPlayerCharacter character) {
-        playerCharacters.remove(character);
+        deadList.add((ICharacter) character);
+        turns.remove(character);
         deadCharacter +=1;
     }
 
@@ -84,32 +106,38 @@ public class Controller {
      *     the enemy who is going to be removed
      */
     public void eraseEnemy(ICharacter enemy) {
-        enemyList.remove(enemy);
+        deadList.add(enemy);
+        turns.remove(enemy);
         deadEnemies +=1;
     }
 
     /**
      * Checks if the player has won or lose the game
      */
-    public void gameChecker () {
-        if (deadCharacter == characterCounter) {
-            hasLose();
+    public boolean gameChecker () {
+        if (deadCharacter == /*characterCounter*/ 10) {
+            this.endGame = true;
+            this.lose = true;
         }
         if (deadEnemies == enemyCounter) {
-            hasWon();
+            this.endGame = true;
+            this.win = true;
         }
+        return endGame;
     }
 
     /**
      * Indicates that the player has won the game
      */
-    public void hasWon() {
+    public boolean hasWon() {
+        return win;
     }
 
     /**
      * Indicates that the player has lose the game
      */
-    public void hasLose(){
+    public boolean hasLose() { //era void que cambiaba el estado de lose
+        return lose;
     }
 
     //Item 1
@@ -121,7 +149,7 @@ public class Controller {
      *     the name of the new character
      */
     public void createBlackMage(String name) {
-        newCharacter = new BlackMage(name, 100, 50, turns, 100);
+        newCharacter = new BlackMage(name, 100, 50, turns);
         playerCharacters.add(newCharacter);
         newCharacter.addCharacterHandler(characterHandler);
         newCharacter.addCharacterTurnHandler(turnsHandler);
@@ -177,7 +205,7 @@ public class Controller {
      *     the name of the new character
      */
     public void createWhiteMage(String name) {
-        newCharacter = new WhiteMage(name, 100, 50, turns, 100);
+        newCharacter = new WhiteMage(name, 100, 50, turns);
         playerCharacters.add(newCharacter);
         newCharacter.addCharacterHandler(characterHandler);
         newCharacter.addCharacterTurnHandler(turnsHandler);
@@ -190,9 +218,10 @@ public class Controller {
      *
      * @param name
      *     the name of the new enemy
+     * @param weight
      */
-    public void createEnemy(String name) {
-        newEnemy = new Enemy(name, 100, 50, 30, 20, turns);
+    public void createEnemy(String name, int weight) {
+        newEnemy = new Enemy(name, 100, 50, 30 /*150*/, weight, turns);
         enemyList.add(newEnemy);
         newEnemy.addCharacterHandler(enemyHandler);
         newEnemy.addCharacterTurnHandler(turnsHandler);
@@ -301,6 +330,13 @@ public class Controller {
     //Item 2
 
     /**
+     * Returns the name of a character
+     */
+    public String getCharacterName(IPlayerCharacter character) {
+        return character.getName();
+    }
+
+    /**
      * Returns the life that a player's character has
      */
     public int getCharacterLife(IPlayerCharacter character) {
@@ -330,6 +366,13 @@ public class Controller {
 
 
     //Item 3
+
+    /**
+     * Returns the name of an enemy
+     */
+    public String getEnemyName(ICharacter enemy) {
+        return enemy.getName();
+    }
 
     /**
      * Returns the life that an enemy has
@@ -416,5 +459,201 @@ public class Controller {
      */
     public void attackEnemy(IPlayerCharacter attackerCharacter, ICharacter attackedCharacter) {
         attackerCharacter.attack(attackedCharacter);
+    }
+
+    // extras
+
+    /**
+     * Sets a phase of the game
+     *
+     * @param phase
+     *     the phase that is being settled
+     */
+    public void setPhase(final Phase phase) {
+        this.phase = phase;
+        phase.setController(this);
+    }
+
+    /**
+     * Returns the actual phase of the game
+     */
+    public Phase getPhase() {
+        return this.phase;
+    }
+
+    /**
+     * Changes the phase of the game to the Equip Weapon Phase
+     */
+    public void goToInventory() {
+        try {
+            phase.toEquipWeaponPhase();
+        } catch (InvalidTransitionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Changes the phase of the game to the Attack Enemy Phase
+     */
+    public void goToAttack() {
+        try {
+            phase.toAttackEnemyPhase();
+        } catch (InvalidTransitionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+    public void goToBattleScreen() {
+        try {
+            phase.toBattlePhase();
+        } catch (InvalidTransitionException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    /**
+     * Tries to attack an enemy in the actual phase
+     *
+     * @param attacker
+     *     the character who is going to attack
+     * @param enemy
+     *     the enemy who is going to be attacked
+     */
+    public void tryToAttackEnemy(IPlayerCharacter attacker, ICharacter enemy) {
+        try {
+            phase.attackEnemy(attacker, enemy);
+        } catch (InvalidTransitionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Tries to equip a weapon in the actual phase
+     *
+     * @param character
+     *     the character who is trying to equip a weapon
+     * @param weapon
+     *     the weapon that is going to be equipped
+     */
+    public void tryToEquipWeapon(IPlayerCharacter character, IWeapon weapon) {
+        try {
+            phase.equipWeapon(character, weapon);
+        } catch (InvalidTransitionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+    public void toAttackEnemyPhase() {
+        try {
+            phase.toAttackEnemyPhase();
+        } catch (InvalidTransitionException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void toEquipWeaponPhase() {
+        try {
+            phase.toEquipWeaponPhase();
+        } catch (InvalidTransitionException e) {
+            e.printStackTrace();
+        }
+    }*/
+
+    /**
+     * Sets the initial conditions of the game, by equipping weapons to
+     * every character, and then adds them to the queue
+     */
+    public void setGame() {
+        equipWeapon(playerCharacters.get(0), inventory.get(4));
+        equipWeapon(playerCharacters.get(1), inventory.get(2));
+        equipWeapon(playerCharacters.get(2), inventory.get(8));
+        equipWeapon(playerCharacters.get(3), inventory.get(5));
+        equipWeapon(playerCharacters.get(4), inventory.get(6));
+        waitTurnAll();
+    }
+
+
+
+    /**
+     * Makes that every character and enemy wait for their turn
+     */
+    private void waitTurnAll(){
+        for(IPlayerCharacter character: playerCharacters){
+            addToQueue((ICharacter) character);
+        }
+        for(ICharacter enemy: enemyList){
+            addToQueue(enemy);
+        }
+    }
+
+    /**
+     * Settle the character who is playing at the moment
+     */
+    public void beginTurn(){
+        characterInTurn = turnInitiated();
+    }
+
+    /**
+     * Returns the character who is playing at the moment
+     */
+    public ICharacter getCharacterInTurn(){
+        return characterInTurn;
+    }
+
+    /**
+     * Returns the name of a character, who could be of any type
+     *
+     * @param character
+     *     character which name is going to be returned
+     */
+    public String getCharacterName(ICharacter character){
+        return character.getName();
+    }
+
+    /**
+     * Returns a string with information of a character. This info is about its name, life,
+     * defense and if it is alive or not
+     */
+    public String getCharacterInfo(int indexPlayerCharacter){
+        String name = getCharacterName((ICharacter) playerCharacters.get(indexPlayerCharacter));
+        String life = Integer.toString(getCharacterLife(playerCharacters.get(indexPlayerCharacter)));
+        String defense = Integer.toString(getCharacterDefense(playerCharacters.get(indexPlayerCharacter)));
+        String isAlive = getCharacterLife(playerCharacters.get(indexPlayerCharacter)) > 0 ? "Alive" : "Dead";
+
+        return name + "\n" + "life: " + life + "\n" + "defense: " + defense + "\n" + isAlive;
+    }
+
+    /**
+     * Returns a string with information of an enemy. This info is about its name, life,
+     * defense and if it is alive or not
+     */
+    public String getEnemyInfo(int indexEnemy) {
+        String name = getCharacterName(enemyList.get(indexEnemy));
+        String life = Integer.toString(getEnemyLife(enemyList.get(indexEnemy)));
+        String defense = Integer.toString(getEnemyDefense(enemyList.get(indexEnemy)));
+        String isAlive = getEnemyLife(enemyList.get(indexEnemy)) > 0 ? "Alive" : "Dead";
+
+        return name + "\n" + "life: " + life + "\n" + "defense: " + defense + "\n" + isAlive;
+    }
+
+    /**
+     * Returns a string with information of a weapon. This info is about its name,
+     * attack and weight
+     */
+    public String getWeaponInfo(IWeapon weapon){
+        String name = getWeaponName(weapon);
+        String attack = Integer.toString(getWeaponAttack(weapon));
+        String weight = Integer.toString(getWeaponWeight(weapon));
+
+        return name + "\t" + attack +"\t" + weight;
+    }
+
+    /**
+     * Returns the list of dead characters
+     */
+    public List<ICharacter> getDeadList() {
+        return deadList;
     }
 }

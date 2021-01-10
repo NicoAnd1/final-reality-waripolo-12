@@ -2,7 +2,7 @@ package com.github.waripolo.finalreality.model.character.player;
 
 import com.github.waripolo.finalreality.model.character.Enemy;
 import com.github.waripolo.finalreality.model.character.ICharacter;
-import com.github.waripolo.finalreality.model.controller.IHandler;
+import com.github.waripolo.finalreality.controller.handlers.IHandler;
 import com.github.waripolo.finalreality.model.weapon.IWeapon;
 
 /**
@@ -92,4 +92,10 @@ public interface IPlayerCharacter {
      */
     void addCharacterTurnHandler(IHandler handler);
 
+    /**
+     * Returns the name of the character
+     */
+    String getName();
+
+    //void addCharacterToQueue(IHandler handler);
 }

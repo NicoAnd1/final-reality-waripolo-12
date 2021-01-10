@@ -1,7 +1,7 @@
 package com.github.waripolo.finalreality.model.character;
 
 import com.github.waripolo.finalreality.model.character.player.IPlayerCharacter;
-import com.github.waripolo.finalreality.model.controller.IHandler;
+import com.github.waripolo.finalreality.controller.handlers.IHandler;
 
 /**
  * This represents a character from the game.
@@ -62,6 +62,8 @@ public interface ICharacter {
    */
   boolean isAlive();
 
+  boolean isEnemy();
+
   /**
    * Adds the character to the listener that notify when the character is alive
    */
@@ -71,4 +73,6 @@ public interface ICharacter {
    * Adds the character to the listener that notify that the turn is over
    */
   void addCharacterTurnHandler(IHandler handler);
+
+  //String getName();
 }
